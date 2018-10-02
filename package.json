@@ -1,0 +1,28 @@
+{
+  "name": "yarukoto",
+  "version": "1.0.0",
+  "description": "A to-do list API using REST architecture",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mkgiles/yarukoto.git"
+  },
+  "keywords": [
+    "REST",
+    "api",
+    "to-do"
+  ],
+  "author": "Conor James Giles",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mkgiles/yarukoto/issues"
+  },
+  "homepage": "https://github.com/mkgiles/yarukoto#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
