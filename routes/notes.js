@@ -24,7 +24,7 @@ router.getNote = (req, res) => {
 		res.send(note)
 }
 router.newNote = (req,res) => {
-	let note = {id: uuid(), list: []}
+	let note = {id: uuid(), list: [], tags: []}
 	notes.push(note)
 	res.redirect('/notes/' + note.id);
 }
@@ -64,5 +64,27 @@ router.dropItem = (req,res) => {
 		note.list.splice(note.list.indexOf(item),1)
 		res.redirect('/notes/' + req.params.id)
 	}
+}
+router.tag = (req,res) => {
+	let note = get(req.params.id)
+	if(!note)
+		res.send("Could not find note to tag!")
+	else{
+		note.tags.push(req.body.tag)
+		res.redirect('/notes/' + req.params.id)
+	}
+}
+router.untag = (req,res) => {
+	let note = get(req.params.id)
+	if(!note)
+		res.send("Could not find note to untag!")
+	else{
+		note.tags.pop(note.tags.indexOf(req.body.tag))
+		res.redirect('/notes/' + req.params.id)
+	}
+}
+router.getByTag = (req,res) => {
+	let results = notes.filter((x)=>x.tags.indexOf(req.params.tag)!=-1)
+	res.json(results)
 }
 module.exports = router;
