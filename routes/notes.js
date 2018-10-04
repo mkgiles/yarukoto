@@ -34,5 +34,10 @@ router.untag = (req,res) => {
 router.getByTag = (req,res) => {
 	Note.find({'tags' : req.params.tag, 'owner' : req.cookies.userId}, (err, notes)=>{if(err) res.send("Search failed due to error: " + err); else if(notes.length == 0) res.send("Could not find anything with that tag"); else res.json(notes)})
 }
-//TODO: implement deadlines and filtering overdue 
+router.setDeadline = (req,res) => {
+	Note.findOneAndUpdate({'_id': req.params.id, 'list.label': req.params.label},{'list.$.deadline' : new Date(req.body.deadline)}, (err, note)=>{if(err) res.send("Setting deadline failed due to error: " + err); else res.redirect('/notes/' + req.params.id)})
+}
+router.getOverdue = (req,res) => {
+	Note.find({'list.deadline' : {$lt : new Date(Date.now())}, 'owner' : req.cookies.userId}, (err,notes)=>{if(err) res.send("Search failed due to error: " + err); else if(notes.length == 0) res.send("Could not find anything overdue"); else res.json(notes)})
+}
 module.exports = router;
